@@ -2,7 +2,9 @@
 #define MARKET_DATA_PROCESSOR_H
 
 #include <unordered_map>
+#include <memory>
 
+#include "market_data_util.h"
 #include "market_data_message.h"
 #include "lock_free_queue.h"
 
@@ -10,9 +12,10 @@ class MarketDataProcessor {
 private:
     std::unordered_map<uint32_t, double> last_prices;
     std::unordered_map<uint32_t, uint32_t> last_sequence;
-    LockFreeQueue<MarketDataMessage, 1000000> output_queue;
+    std::unique_ptr<LockFreeQueue<MarketDataMessage, QUEUE_SIZE>> output_queue;
     
 public:
+    MarketDataProcessor();
     bool processMessage(const MarketDataMessage& msg);
     
 private:
@@ -21,4 +24,4 @@ private:
 
 #endif
 
-// add macross for the magic numbers...
+// multiple queue partitioning?
