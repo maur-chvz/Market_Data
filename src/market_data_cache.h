@@ -8,6 +8,7 @@
 #include <mutex>
 #include <shared_mutex>
 
+#include "market_data_util.h"
 #include "market_data_message.h"
 
 class MarketDataCache {

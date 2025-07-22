@@ -4,10 +4,10 @@ project(MarketData LANGUAGES CXX)
 set(SOURCES
     src/market_data.cpp
     src/exchange_connector.cpp
-    # src/market_data_cache.cpp
-    # src/market_data_distributor.cpp
-    # src/market_data_message.cpp
-    # src/market_data_processor.cpp
+    src/market_data_cache.cpp
+    src/market_data_distributor.cpp
+    src/market_data_message.cpp
+    src/market_data_processor.cpp
     src/market_data_system.cpp
 )
 
@@ -19,6 +19,7 @@ set(HEADERS
     src/market_data_message.h
     src/market_data_processor.h
     src/market_data_system.h
+    src/market_data_util.h
 )
 
 add_executable(MarketData ${SOURCES} ${HEADERS})

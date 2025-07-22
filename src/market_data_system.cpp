@@ -11,6 +11,10 @@ void MarketDataSystem::start() {
 void MarketDataSystem::stop() {
     running.store(false);
 
+    for(auto const& conns : connectors) {
+        conns->stop();
+    }
+
     if (processing_thread.joinable()) {
         processing_thread.join();
     }
@@ -51,11 +55,6 @@ void MarketDataSystem::distributeMessages() {
     while(running.load()) {
         std::cout << "Distribute\n";
     }
-}
-
-uint64_t MarketDataSystem::getCurrentMicroseconds() {
-    auto now = std::chrono::high_resolution_clock::now();
-    return std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count();
 }
 
 void MarketDataSystem::setCpuAffinity(std::thread& thread, int cpu_core) {

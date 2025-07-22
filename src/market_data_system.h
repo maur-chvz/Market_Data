@@ -9,15 +9,15 @@
 
 #include "exchange_connector.h"
 #include "market_data_processor.h"
-// #include "market_data_distributor.h"
-// #include "market_data_cache.h"
+#include "market_data_distributor.h"
+#include "market_data_cache.h"
 
 class MarketDataSystem {
 private:
     std::vector<std::unique_ptr<ExchangeConnector>> connectors;
     MarketDataProcessor processor;
-    // MarketDataDistributor distributor;
-    // MarketDataCache cache;
+    MarketDataDistributor distributor;
+    MarketDataCache cache;
     
     std::thread processing_thread;
     std::thread distribution_thread;
@@ -33,7 +33,6 @@ private:
     void processMessages();
     void distributeMessages();
 
-    uint64_t getCurrentMicroseconds();
     void setCpuAffinity(std::thread& thread, int cpu_core);
 };
 

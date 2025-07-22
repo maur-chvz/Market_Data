@@ -5,7 +5,7 @@ void MarketDataCache::updatePrice(const MarketDataMessage& msg) {
     
     CacheEntry& entry = cache[msg.instrument_id];
     entry.data = msg;
-    // entry.last_updated = getCurrentMicroseconds();
+    entry.last_updated = getCurrentMicroseconds();
     entry.dirty.store(true);
 }
 
@@ -26,7 +26,7 @@ void MarketDataCache::batchUpdate(const std::vector<MarketDataMessage>& messages
     for (const auto& msg : messages) {
         CacheEntry& entry = cache[msg.instrument_id];
         entry.data = msg;
-        // entry.last_updated = getCurrentMicroseconds();
+        entry.last_updated = getCurrentMicroseconds();
         entry.dirty.store(true);
     }
 }

@@ -1,5 +1,7 @@
 #include "market_data_processor.h"
 
+MarketDataProcessor::MarketDataProcessor() : output_queue(std::make_unique<LockFreeQueue<MarketDataMessage, QUEUE_SIZE>>()) {}
+
 bool MarketDataProcessor::processMessage(const MarketDataMessage& msg) {
     if (last_sequence[msg.instrument_id] >= msg.sequence_number) {
         return false;
@@ -12,14 +14,14 @@ bool MarketDataProcessor::processMessage(const MarketDataMessage& msg) {
     double last_price = last_prices[msg.instrument_id];
     double price_change = std::abs(msg.price - last_price) / last_price;
     
-    if (price_change > 0.10) { // 10% change threshold
+    if (price_change > 0.10) {
         logPriceAlert(msg);
     }
     
     last_prices[msg.instrument_id] = msg.price;
     last_sequence[msg.instrument_id] = msg.sequence_number;
     
-    return output_queue.push(msg);
+    return output_queue->push(msg);
 }
 
 void MarketDataProcessor::logPriceAlert(const MarketDataMessage& msg) {

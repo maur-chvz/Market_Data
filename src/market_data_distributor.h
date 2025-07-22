@@ -2,6 +2,7 @@
 #define MARKET_DATA_DISTRIBUTOR_H
 
 #include <vector>
+#include <cstdint>
 #include <unordered_map>
 #include <thread>
 #include <unordered_set>

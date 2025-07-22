@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <unordered_set>
+#include <cstring>
 
 struct MarketDataMessage {
     uint64_t timestamp;
@@ -14,6 +15,7 @@ struct MarketDataMessage {
     
     void serialize(char* buffer) const;
     static MarketDataMessage deserialize(const char* buffer);
+    static void deserialize_inplace(const char* buffer, MarketDataMessage& msg);
 };
 
 struct Subscription {
